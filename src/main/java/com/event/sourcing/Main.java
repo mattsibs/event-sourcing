@@ -1,21 +1,14 @@
 package com.event.sourcing;
 
-import com.event.sourcing.proxy.EventfulProxyInvocationHandler;
-import com.event.sourcing.service.EventfulProxy;
+import com.event.sourcing.proxy.EventfulMethodInterceptor;
 import com.event.sourcing.service.UserService;
-
-import java.lang.reflect.Proxy;
+import net.sf.cglib.proxy.Enhancer;
 
 public class Main {
 
     public static void main(final String[] args) {
 
-        UserService userService = new UserService();
-
-        EventfulProxy proxy = (EventfulProxy) Proxy.newProxyInstance(EventfulProxyInvocationHandler.class.getClassLoader(),
-                new Class[] { EventfulProxy.class },
-                new EventfulProxyInvocationHandler(userService));
-
+        UserService proxy = (UserService) Enhancer.create(UserService.class, new EventfulMethodInterceptor());
 
         proxy.testMethod();
     }
