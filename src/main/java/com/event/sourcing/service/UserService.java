@@ -4,10 +4,9 @@ import com.event.sourcing.annotation.Eventful;
 import com.event.sourcing.annotation.EventfulService;
 
 @EventfulService
-public class UserService implements EventfulProxy {
+public class UserService {
 
     @Eventful
-    @Override
     public String testMethod() {
         return "Hello";
     }
