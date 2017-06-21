@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class SpringServiceConfiguration {
@@ -19,9 +21,16 @@ public class SpringServiceConfiguration {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PlatformTransactionManager platformTransactionManager;
+
     @Bean
     public EventLogger eventLogger() {
-        return L::info;
+        return object -> {
+
+//            throw new RuntimeException("Error logging");
+
+        };
     }
 
     @Bean
@@ -31,7 +40,7 @@ public class SpringServiceConfiguration {
 
     @Bean
     public EventfulMethodInterceptor eventfulMethodInterceptor() {
-        return new EventfulMethodInterceptor(eventService());
+        return new EventfulMethodInterceptor(eventService(), platformTransactionManager);
     }
 
     @Bean

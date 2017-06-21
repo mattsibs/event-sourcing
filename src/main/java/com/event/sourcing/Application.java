@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan
-public class Application implements CommandLineRunner {
+public class Application {
 
     @Autowired
     private UserService userService;
@@ -18,8 +18,4 @@ public class Application implements CommandLineRunner {
         SpringApplication.run(Application.class, args);
     }
 
-    @Override
-    public void run(String... arg0) throws Exception {
-        userService.testMethod();
-    }
 }

@@ -1,5 +1,6 @@
 package com.event.sourcing.controller;
 
+import com.event.sourcing.model.CreateUserEvent;
 import com.event.sourcing.model.user.User;
 import com.event.sourcing.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class UserController {
 
     @PostMapping(value = "/users")
     public void create(final String userName) {
-        userService.createUser(userName);
+        userService.createUser(CreateUserEvent.of(null));
     }
 
 }
