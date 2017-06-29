@@ -1,12 +1,9 @@
 package com.event.sourcing.controller;
 
-import com.event.sourcing.model.CreateUserEvent;
 import com.event.sourcing.model.user.User;
-import com.event.sourcing.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.event.sourcing.service.user.UserService;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,8 +23,39 @@ public class UserController {
     }
 
     @PostMapping(value = "/users")
-    public void create(final String userName) {
-        userService.createUser(CreateUserEvent.of(null));
+    public void create() {
+        userService.createUser(new CreateUserRequest("mattSibson", "Matthew", "Sibson", "itsASecret"));
+    }
+
+    public static class CreateUserRequest {
+
+        @JsonProperty private final String username;
+        @JsonProperty private final String firstName;
+        @JsonProperty private final String lastName;
+        @JsonProperty private final String password;
+
+        public CreateUserRequest(final String username, final String firstName, final String lastName, final String password) {
+            this.username = username;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.password = password;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public String getPassword() {
+            return password;
+        }
     }
 
 }

@@ -1,10 +1,12 @@
 package com.event.sourcing.proxy;
 
 import com.event.sourcing.annotation.Eventful;
-import com.event.sourcing.event.EventService;
+import com.event.sourcing.config.SpringServiceConfiguration;
+import com.event.sourcing.service.event.EventService;
 import com.google.common.collect.ImmutableList;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.apache.log4j.Logger;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -15,6 +17,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 public class EventfulMethodInterceptor implements MethodInterceptor {
+    private static final Logger L = Logger.getLogger(EventfulMethodInterceptor.class);
 
     private final EventService eventService;
     private final PlatformTransactionManager transactionManager;
@@ -43,14 +46,18 @@ public class EventfulMethodInterceptor implements MethodInterceptor {
 
         try {
             T result = transaction.run();
-            eventService.persistLog(result);
+
+            //make persisting a transactional operation
             transactionManager.commit(status);
+            eventService.persistLog(result);
+
             return result;
 
         } catch (Throwable e){
             transactionManager.rollback(status);
             throw e;
         }
+
     }
 
     @FunctionalInterface
