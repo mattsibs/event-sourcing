@@ -4,6 +4,7 @@ import com.event.sourcing.annotation.Eventful;
 import com.event.sourcing.annotation.EventfulService;
 import com.event.sourcing.config.SpringServiceConfiguration;
 import com.event.sourcing.event.Event;
+import com.event.sourcing.event.EventPayload;
 import com.event.sourcing.service.role.RoleService;
 import org.apache.log4j.Logger;
 import org.springframework.aop.TargetSource;
@@ -37,8 +38,11 @@ public class EventfulBeanPostProcessor extends AbstractAutoProxyCreator {
     private void validateEventfulService(final Class<?> beanClass) {
         for (final Method method : beanClass.getMethods()) {
             if (method.isAnnotationPresent(Eventful.class)
-                    && !Event.class.isAssignableFrom(method.getReturnType())) {
-                throw new IllegalStateException( String.format("", method.getName(), method.getReturnType()));
+                    && !EventPayload.class.isAssignableFrom(method.getReturnType())) {
+                throw new IllegalStateException(
+                        String.format("Method %s returns type %s, Eventful annotation must return Event",
+                                method.getName(),
+                                method.getReturnType()));
             }
         }
     }

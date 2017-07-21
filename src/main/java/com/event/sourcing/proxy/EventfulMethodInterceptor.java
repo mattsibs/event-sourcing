@@ -47,7 +47,6 @@ public class EventfulMethodInterceptor implements MethodInterceptor {
         try {
             T result = transaction.run();
 
-            //make persisting a transactional operation
             transactionManager.commit(status);
             eventService.persistLog(result);
 
