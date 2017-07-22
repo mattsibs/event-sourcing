@@ -8,7 +8,7 @@ public class EventService {
     private final EventReader eventReader;
     private final EventHandler eventHandler;
 
-    public EventService(final EventLogger eventLogger, final EventReader eventReader, final EventHandler eventHandler) {
+    EventService(final EventLogger eventLogger, final EventReader eventReader, final EventHandler eventHandler) {
         this.eventLogger = eventLogger;
         this.eventReader = eventReader;
         this.eventHandler = eventHandler;
@@ -19,6 +19,6 @@ public class EventService {
     }
 
     public void updateEvents() {
-        eventReader.read(eventHandler::handle);
+        eventReader.read(eventHandler);
     }
 }

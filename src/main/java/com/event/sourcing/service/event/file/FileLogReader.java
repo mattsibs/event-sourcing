@@ -1,14 +1,16 @@
 package com.event.sourcing.service.event.file;
 
-import com.event.sourcing.config.SpringServiceConfiguration;
+import com.event.sourcing.event.Event;
 import com.event.sourcing.service.event.EventHandler;
 import com.event.sourcing.service.event.EventReader;
-import com.event.sourcing.event.Event;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import org.apache.log4j.Logger;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class FileLogReader extends EventReader<String> {
     private static final Logger L = Logger.getLogger(FileLogReader.class);
@@ -32,10 +34,9 @@ public class FileLogReader extends EventReader<String> {
                     .map(this::marshallEvent)
                     .forEach(eventHandler::handle);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            L.error("Error reading file", e);
+            Throwables.propagateIfPossible(e);
         }
 
     }
@@ -46,7 +47,7 @@ public class FileLogReader extends EventReader<String> {
             return objectMapper.readValue(s, Event.class);
         } catch (IOException e) {
             L.error("Could not process event " + s + " ", e);
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 

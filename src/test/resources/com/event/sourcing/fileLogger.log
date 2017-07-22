@@ -1,0 +1,1 @@
+{"com.event.sourcing.event.Event":{"eventPayload":{"com.event.sourcing.event.user.CreateUserEvent":{"domainObject":"com.event.sourcing.model.user.User","type":"CREATE","logId":"b7e63c98-3063-4bfa-bf41-333f994adb85","username":"mattSibson","firstName":"Matthew","lastName":"Sibson","password":"itsASecret"}},"timestamp":1498608407}}
