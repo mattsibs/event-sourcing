@@ -1,7 +1,6 @@
 package com.event.sourcing.proxy;
 
 import com.event.sourcing.annotation.Eventful;
-import com.event.sourcing.config.SpringServiceConfiguration;
 import com.event.sourcing.service.event.EventService;
 import com.google.common.collect.ImmutableList;
 import org.aopalliance.intercept.MethodInterceptor;

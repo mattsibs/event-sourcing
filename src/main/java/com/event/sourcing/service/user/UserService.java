@@ -5,11 +5,9 @@ import com.event.sourcing.annotation.EventfulService;
 import com.event.sourcing.controller.UserController;
 import com.event.sourcing.event.user.CreateUserEvent;
 import com.event.sourcing.model.DataManager;
-import com.event.sourcing.model.role.Role;
 import com.event.sourcing.model.user.User;
 import com.event.sourcing.model.user.UserRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 

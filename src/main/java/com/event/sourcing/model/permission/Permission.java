@@ -1,7 +1,6 @@
 package com.event.sourcing.model.permission;
 
 import com.google.common.base.MoreObjects;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

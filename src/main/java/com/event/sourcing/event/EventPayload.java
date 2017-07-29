@@ -2,9 +2,6 @@ package com.event.sourcing.event;
 
 import com.event.sourcing.model.DataManager;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.function.Function;
 
 public abstract class EventPayload<T> {
 

@@ -1,14 +1,16 @@
 package com.event.sourcing.service.event.file;
 
-import com.event.sourcing.config.SpringServiceConfiguration;
+import com.event.sourcing.event.Event;
 import com.event.sourcing.service.event.EventHandler;
 import com.event.sourcing.service.event.EventReader;
-import com.event.sourcing.event.Event;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Throwables;
 import org.apache.log4j.Logger;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class FileLogReader extends EventReader<String> {
     private static final Logger L = Logger.getLogger(FileLogReader.class);

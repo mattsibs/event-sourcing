@@ -3,7 +3,10 @@ package com.event.sourcing.controller;
 import com.event.sourcing.model.user.User;
 import com.event.sourcing.service.user.UserService;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

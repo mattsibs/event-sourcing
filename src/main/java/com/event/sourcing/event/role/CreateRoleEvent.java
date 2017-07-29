@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static java.util.UUID.randomUUID;
 import static java.util.stream.Collectors.toList;
 
 public class CreateRoleEvent extends EventPayload<Role> {
