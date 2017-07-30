@@ -31,5 +31,4 @@ public class PermissionService {
         permission.setResource(resource);
         return permissionRepository.save(permission);
     }
-
 }

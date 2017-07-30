@@ -9,6 +9,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
 import java.util.Properties;
+import java.util.UUID;
 
 @Configuration
 public class HibernateConfiguration {
@@ -16,7 +17,8 @@ public class HibernateConfiguration {
     @Bean
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
-                .setName("InMem").build();
+                .setName(UUID.randomUUID().toString())
+                .build();
     }
 
     @Bean
