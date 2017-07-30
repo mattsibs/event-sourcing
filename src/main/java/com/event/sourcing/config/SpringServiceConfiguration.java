@@ -35,9 +35,12 @@ public class SpringServiceConfiguration {
     @Autowired
     private PlatformTransactionManager platformTransactionManager;
 
+    @Autowired
+    private ServerConfiguration serverConfiguration;
+
     @Bean
     public EventService eventService() {
-        return EventServiceFactory.createFileBasedEventService("fileLogger.log", event -> {
+        return EventServiceFactory.createFileBasedEventService(serverConfiguration.getLogFile(), event -> {
             L.info(event.getEventPayload().process(dataManager()));
         });
     }

@@ -1,17 +1,18 @@
 package com.event.sourcing.config;
 
 
-import com.beust.jcommander.Parameter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
+import java.io.File;
+
+@Configuration
 public class ServerConfiguration {
 
-    @Parameter(names = "-log-type", description = "Log type", required = true)
-    private LogType logType;
+    @Value("${event.logger.file}")
+    private String logFile;
 
-
-    enum LogType {
-        FILE
+    public File getLogFile() {
+        return new File(logFile);
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.event.sourcing.service.event.file;
 
 import com.event.sourcing.event.Event;
+import com.event.sourcing.exception.EventProcessingException;
 import com.event.sourcing.service.event.EventHandler;
 import com.event.sourcing.service.event.EventReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,9 +20,9 @@ public class FileLogReader extends EventReader<String> {
     private final ObjectMapper objectMapper;
     private final File file;
 
-    public FileLogReader(final ObjectMapper objectMapper, final String pathToFile) {
+    public FileLogReader(final ObjectMapper objectMapper, final File file) {
         this.objectMapper = objectMapper;
-        this.file = new File(pathToFile);
+        this.file = file;
     }
 
     @Override
@@ -34,12 +35,9 @@ public class FileLogReader extends EventReader<String> {
                     .map(this::marshallEvent)
                     .forEach(eventHandler::handle);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new EventProcessingException("Error reading from file " + file.getAbsolutePath(), e);
         }
-
     }
 
     @Override
@@ -47,8 +45,7 @@ public class FileLogReader extends EventReader<String> {
         try {
             return objectMapper.readValue(s, Event.class);
         } catch (IOException e) {
-            L.error("Could not process event " + s + " ", e);
-            throw  new RuntimeException(e);
+            throw  new EventProcessingException("Could not marshall event " + s, e);
         }
     }
 
